@@ -1,0 +1,37 @@
+<!-- edit_product.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Product</title>
+    <style>
+        header {
+            background-color: #0077cc; /* Цвет синего моря */
+            padding: 10px;
+            color: #fff; /* Цвет текста */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: #fff; /* Цвет ссылок */
+            text-decoration: none; /* Убираем подчеркивание ссылок */
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+        <a href="{% url 'product_list' %}">Главная</a>
+    <a href="{% url 'register_user' %}">Регистрация</a>
+        <a href="{% url 'login_user' %}">Авторизация</a>
+        <a href="{% url 'cart' %}">Корзина</a>
+    </header>
+    <h1>Edit Product</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Изменить">
+    </form>
+</body>
+</html>

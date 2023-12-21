@@ -1,0 +1,82 @@
+{% load thumbnail %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+    <style>
+        .format-div {
+            background-color: #aaa;
+            border: 2px solid red;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .format-div a {
+            color: #ADD8E6;
+            text-decoration: none;
+        }
+
+        .content-div {
+            background-color: #a7dbd2;
+            border: 2px solid #990000;
+            padding: 10px;
+            margin: 10px;
+        }
+        .hidden-link {
+            color: black;
+            text-decoration: none;
+        }
+        header {
+            background-color: #0077cc; /* Цвет синего моря */
+            padding: 10px;
+            color: #fff; /* Цвет текста */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: #fff; /* Цвет ссылок */
+            text-decoration: none; /* Убираем подчеркивание ссылок */
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+        <a href="{% url 'product_list' %}">Главная</a>
+    <a href="{% url 'register_user' %}">Регистрация</a>
+        <a href="{% url 'login_user' %}">Авторизация</a>
+        <a href="{% url 'cart' %}">Корзина</a>
+    </header>
+    <h1>Product List</h1>
+    <div class = "format-div">
+     <p>
+        <a href="?sort_by=name">Name</a> |
+        <a href="?sort_by=price_asc">Price Asc</a> |
+        <a href="?sort_by=price_desc">Price Desc</a> |
+        <a href="?sort_by=quantity_asc">Quantity Asc</a> |
+        <a href="?sort_by=quantity_desc">Quantity Desc</a>
+    </p>
+    <form method="get">
+        <label for="search">Search by name:</label>
+        <input type="text" id="search" name="q" value="{{ search_query }}">
+        <input type="submit" value="Search">
+    </form>
+    </div>
+    {% for product in products %}
+
+        <div class="content-div">
+        <a class="hidden-link" href="{% url 'product_detail' product_id=product.id %}">
+            <img src="{% thumbnail product.image "100x100" crop="center" %}" alt="{{ product.name }}">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description|truncatechars:50 }}</p>
+            <p>Price: ${{ product.price }}</p>
+        <a href="{% url 'edit_product' product_id=product.id %}">Изменить</a>
+            </a>
+        </div>
+
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% load thumbnail %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+    <style>
+        .content-div {
+            background-color: #a7dbd2;
+            border: 2px solid #990000;
+            padding: 10px;
+            margin: 10px;
+        }
+        header {
+            background-color: #0077cc; /* Цвет синего моря */
+            padding: 10px;
+            color: #fff; /* Цвет текста */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: #fff; /* Цвет ссылок */
+            text-decoration: none; /* Убираем подчеркивание ссылок */
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+        <a href="{% url 'product_list' %}">Главная</a>
+    <a href="{% url 'register_user' %}">Регистрация</a>
+        <a href="{% url 'login_user' %}">Авторизация</a>
+        <a href="{% url 'cart' %}">Корзина</a>
+    </header>
+    <h1>Shopping Cart</h1>
+    {% for product in products %}
+        <div class="content-div">
+            <img src="{% thumbnail product.image "100x100" crop="center" %}" alt="{{ product.name }}">
+            <h2>{{ product.name }}</h2>
+            <p>Quantity {{ cart|filter_get:product.id }}</p>
+            <form method="post" action="{% url 'remove_from_cart' product.id %}">
+                {% csrf_token %}
+                <input type="submit" value="Remove from Cart">
+            </form>
+        </div>
+    {% endfor %}
+    <p>Total Price: ${{ total_price }}</p>
+    <form method="post" action="{% url 'submit_order' %}">
+        {% csrf_token %}
+        <input type="submit" value="Купить">
+    </form>
+</body>
+</html>

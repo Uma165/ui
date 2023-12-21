@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Успешно</title>
+    <style>
+        header {
+            background-color: #0077cc; /* Цвет синего моря */
+            padding: 10px;
+            color: #fff; /* Цвет текста */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: #fff; /* Цвет ссылок */
+            text-decoration: none; /* Убираем подчеркивание ссылок */
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+        <a href="{% url 'product_list' %}">Главная</a>
+    <a href="{% url 'register_user' %}">Регистрация</a>
+        <a href="{% url 'login_user' %}">Авторизация</a>
+        <a href="{% url 'cart' %}">Корзина</a>
+    </header>
+<h1>Заказ успешно отправлен</h1>
+</body>
+</html>

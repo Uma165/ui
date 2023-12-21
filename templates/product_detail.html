@@ -1,0 +1,42 @@
+{% load thumbnail %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ product.name }}</title>
+    <style>
+        header {
+            background-color: #0077cc; /* Цвет синего моря */
+            padding: 10px;
+            color: #fff; /* Цвет текста */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: #fff; /* Цвет ссылок */
+            text-decoration: none; /* Убираем подчеркивание ссылок */
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+        <a href="{% url 'product_list' %}">Главная</a>
+    <a href="{% url 'register_user' %}">Регистрация</a>
+        <a href="{% url 'login_user' %}">Авторизация</a>
+        <a href="{% url 'cart' %}">Корзина</a>
+    </header>
+<a href = "{% url 'display_full_image' product.id %}" target="_blank">
+    <img src="{% thumbnail product.image "300x300" crop="center" %}" alt="{{ product.image.url }}">
+</a>
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description }}</p>
+    <p>Price: ${{ product.price }}</p>
+    <p>Stock Quantity: {{ product.stock_quantity }}</p>
+    <form method="post" action="{% url 'add_to_cart' product.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Add to Cart">
+    </form>
+</body>
+</html>
